@@ -1,9 +1,8 @@
 import tw from 'twin.macro'
 import styled from 'styled-components'
-import { rgba } from 'polished'
 
 export const AppFormGroup = styled.div`
-    ${tw`w-auto mb-4`}
+    ${tw`w-auto mb-6`}
 
     > label {
         ${tw`block mb-2`}
@@ -12,7 +11,7 @@ export const AppFormGroup = styled.div`
     > input,
     > select,
     > textarea {
-        ${tw`w-full h-11 block rounded-lg py-1 px-3 border border-solid`}
+        ${tw`w-full h-11 block rounded-xl py-1 px-4 border border-solid`}
         color: ${props => props.theme.colors.text};
         text-rendering: optimizeLegibility !important;
         background: ${({ theme }) => theme.colors.bgSecondary};

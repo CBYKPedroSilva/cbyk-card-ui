@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import styled from 'styled-components'
 import tw from 'twin.macro'
 
@@ -10,13 +9,13 @@ interface CommonProps {
     color?: string
 }
 
-export const Backdrop = styled.section`
+const Backdrop = styled.section`
     ${tw`fixed w-full h-full top-0 left-0 flex flex-col justify-start items-center z-30`}
     background: #000000a1;
     padding-top: 16vh;
 `
 
-export const ModalContainer = styled.article.attrs(animationIn)`
+const ModalContainer = styled.article.attrs(animationIn)`
     ${tw`p-6 pb-10 flex flex-col z-50 rounded-lg mx-14`}
     height: 40vh;
     background: ${({ theme }) => theme.colors.bgPrimary};
@@ -24,9 +23,9 @@ export const ModalContainer = styled.article.attrs(animationIn)`
     max-width: 1440px;
 `
 
-export const ModalHeader = styled.div``
+const ModalHeader = styled.div``
 
-export const ModalBody = styled.div<CommonProps>`
+const ModalBody = styled.div<CommonProps>`
     ${tw`flex-auto overflow-y-auto overflow-x-hidden`}
 
     ::-webkit-scrollbar-thumb {
@@ -36,11 +35,11 @@ export const ModalBody = styled.div<CommonProps>`
     }
 `
 
-export const ModalFooter = styled.div`
+const ModalFooter = styled.div`
     ${tw`py-2`}
 `
 
-export const Button = styled.button.attrs(animationIn)<CommonProps>`
+const Button = styled.button.attrs(animationIn)<CommonProps>`
     ${tw`px-4 py-2 flex justify-center items-center z-50 rounded-full relative bottom-5`}
     background: ${({ theme, color }) => color || theme.colors.primary};
     color: ${({ theme }) => theme.colors.bgPrimary};
@@ -49,3 +48,12 @@ export const Button = styled.button.attrs(animationIn)<CommonProps>`
         ${tw`text-lg ml-2`}
     }
 `
+
+export default {
+    Backdrop,
+    ModalContainer,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    Button
+}

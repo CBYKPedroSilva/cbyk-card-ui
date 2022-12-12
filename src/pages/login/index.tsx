@@ -1,19 +1,14 @@
 import React from 'react'
 import * as yup from 'yup'
+import { setLoading } from '@/hooks'
 import { useForm } from 'react-hook-form'
+import Styles from '@/styles/pages/login'
+import Logo from '@/assets/images/logo.png'
 import AppHead from '@/components/common/app-head'
 import { IAuth } from '@/interfaces/auth.interface'
 import { yupResolver } from '@hookform/resolvers/yup'
-import {
-    Form,
-    Span,
-    Input,
-    Label,
-    Button,
-    FormGroup,
-    Container
-} from '@/styles/pages/login'
-import { setLoading } from '@/hooks'
+import AppInput from '@/components/common/form/app-input'
+import AppInputPassword from '@/components/common/form/app-input-password'
 
 const Login: React.FC = () => {
     const authForm = yup.object().shape({
@@ -45,23 +40,28 @@ const Login: React.FC = () => {
         <>
             <AppHead title="Login" />
 
-            <Container>
-                <Form onSubmit={handleSubmit(handleSubmitForm)}>
-                    <FormGroup>
-                        <Label>e-mail</Label>
-                        <Input {...register('email')} type="email" />
-                        <Span>{errors.email?.message}</Span>
-                    </FormGroup>
+            <Styles.Container>
+                <Styles.Image src={Logo} alt="Cartão de visitas" />
+                <Styles.Title>Cartão de visitas CBYK</Styles.Title>
 
-                    <FormGroup>
-                        <Label>senha</Label>
-                        <Input {...register('password')} type="password" />
-                        <Span>{errors.password?.message}</Span>
-                    </FormGroup>
+                <Styles.Form onSubmit={handleSubmit(handleSubmitForm)}>
+                    <AppInput
+                        id="email"
+                        type="email"
+                        label="e-mail"
+                        register={register}
+                        error={errors.email}
+                    />
 
-                    <Button type="submit">Entrar</Button>
-                </Form>
-            </Container>
+                    <AppInputPassword
+                        id="password"
+                        register={register}
+                        error={errors.password}
+                    />
+
+                    <Styles.Button type="submit">Entrar</Styles.Button>
+                </Styles.Form>
+            </Styles.Container>
         </>
     )
 }

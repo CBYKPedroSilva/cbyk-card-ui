@@ -1,14 +1,7 @@
+import Styles from './styles'
 import { MdClose } from 'react-icons/md'
 import React, { useEffect, useRef } from 'react'
 import { AppModalInterface } from '@/interfaces/_app-modal.interface'
-import {
-    Button,
-    Backdrop,
-    ModalBody,
-    ModalHeader,
-    ModalFooter,
-    ModalContainer
-} from './styles'
 
 const AppModal: React.FC<AppModalInterface> = props => {
     const backdropEl = useRef(null)
@@ -41,11 +34,11 @@ const AppModal: React.FC<AppModalInterface> = props => {
     return (
         <>
             {isOpen && (
-                <Backdrop
+                <Styles.Backdrop
                     ref={backdropEl}
                     onClick={({ target }) => handleBackdropClick(target)}
                 >
-                    <ModalContainer
+                    <Styles.ModalContainer
                         style={{
                             maxWidth,
                             maxHeight,
@@ -54,18 +47,27 @@ const AppModal: React.FC<AppModalInterface> = props => {
                             height: height || 'fit-content'
                         }}
                     >
-                        {header && <ModalHeader>{header}</ModalHeader>}
-                        <ModalBody color={color}>{children}</ModalBody>
-                        {footer && <ModalFooter>{footer}</ModalFooter>}
-                    </ModalContainer>
+                        {header && (
+                            <Styles.ModalHeader>{header}</Styles.ModalHeader>
+                        )}
+                        <Styles.ModalBody color={color}>
+                            {children}
+                        </Styles.ModalBody>
+                        {footer && (
+                            <Styles.ModalFooter>{footer}</Styles.ModalFooter>
+                        )}
+                    </Styles.ModalContainer>
 
                     {onClickClose && (
-                        <Button color={color} onClick={() => onClickClose()}>
+                        <Styles.Button
+                            color={color}
+                            onClick={() => onClickClose()}
+                        >
                             Fechar
                             <MdClose />
-                        </Button>
+                        </Styles.Button>
                     )}
-                </Backdrop>
+                </Styles.Backdrop>
             )}
         </>
     )
