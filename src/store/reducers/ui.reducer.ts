@@ -4,7 +4,7 @@ import { THEME_TYPE } from '@/contants/theme-type'
 import { UiStateInterface } from '@/store/@interfaces/uiState.interface'
 
 const initialState: UiStateInterface = {
-    theme: THEME_TYPE.light
+    theme: THEME_TYPE.dark
 }
 
 const { actions: mutations, reducer } = createSlice({

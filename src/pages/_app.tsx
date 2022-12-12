@@ -12,6 +12,7 @@ import AppToast from '@/components/common/app-toast'
 import AppLoading from '@/components/common/app-loading'
 import { PersistGate } from 'redux-persist/integration/react'
 import { UiStateInterface } from '@/store/@interfaces/uiState.interface'
+import RouteGuard from '@/guards/route-guard'
 
 const persistor = persistStore(store)
 
@@ -28,7 +29,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
             <AppLoading />
             <AppToast />
 
-            {layoutControl(<Component {...pageProps} />)}
+            <RouteGuard>
+                {layoutControl(<Component {...pageProps} />)}
+            </RouteGuard>
         </ThemeProvider>
     )
 }
