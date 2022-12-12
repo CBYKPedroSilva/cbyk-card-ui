@@ -19,7 +19,7 @@ export default createGlobalStyle`
     ${tw`text-base`}
     background: ${props => props.theme.colors.bgPrimary};
     color: ${props => props.theme.colors.text};
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Poppins';
     font-weight: 400;
 
   }

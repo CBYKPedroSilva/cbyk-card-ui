@@ -5,7 +5,7 @@ const common = {
         gray: '#919191',
         green: '#5EC278',
         yellow: '#FFD410',
-        primary: '#518DE0',
+        primary: '#D4441C',
         secondary: '#E94560'
     },
     spacing: {

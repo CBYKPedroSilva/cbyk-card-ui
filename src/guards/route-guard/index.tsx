@@ -1,3 +1,5 @@
+import { useMapState } from '@/hooks'
+import { IAuthStore } from '@/store/@interfaces/auth.interface'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
@@ -6,6 +8,8 @@ interface RouteGuardProps {
 }
 const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     const router = useRouter()
+    const { token } = useMapState('auth') as IAuthStore
+
     const [authorized, setAuthorized] = useState(false)
 
     useEffect(() => {
@@ -22,9 +26,9 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     }, [])
 
     function authCheck(url: string) {
+        const hasToken = !!token
         const publicPaths = ['/login']
         const path = url.split('?')[0]
-        const hasToken = false
 
         if (path === '/login' && hasToken) {
             setAuthorized(true)
