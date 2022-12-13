@@ -1,6 +1,7 @@
-import React from 'react'
 import * as yup from 'yup'
 import { setLoading } from '@/hooks'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import Logo from '@/assets/images/logo.png'
 import Styles from '@/styles/pages/register'
@@ -9,10 +10,11 @@ import AppHead from '@/components/common/app-head'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { IProfile } from '@/interfaces/profile.interface'
 import AppInput from '@/components/common/form/app-input'
-import { useRouter } from 'next/router'
+import AppInputFile from '@/components/common/form/app-input-file'
 
 const Register: React.FC = () => {
     const router = useRouter()
+    const [imageModel, setImageModel] = useState<FileList | never[]>([])
 
     const authForm = yup.object().shape({
         websiteUrl: yup.string(),
@@ -36,7 +38,8 @@ const Register: React.FC = () => {
         setLoading(true, 'Enviando o seu contato...')
 
         try {
-            console.log('Model :', model)
+            const file = imageModel[0]
+            console.log('Model :', model, file)
         } catch (error) {
             console.log('Error :', error)
         } finally {
@@ -60,6 +63,14 @@ const Register: React.FC = () => {
                 </Styles.Header>
 
                 <Styles.Form onSubmit={handleSubmit(handleSubmitForm)}>
+                    <AppInputFile
+                        id="photo"
+                        label="Foto"
+                        multiple={false}
+                        setModel={setImageModel}
+                        text="Faça upload de uma foto"
+                    />
+
                     <AppInput
                         id="name"
                         label="Nome"

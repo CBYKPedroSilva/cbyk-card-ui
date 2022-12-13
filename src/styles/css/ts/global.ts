@@ -13,6 +13,11 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    &::placeholder {
+        font-family: 'Poppins';
+        ${tw`text-base`}
+    }
   }
 
   body {
