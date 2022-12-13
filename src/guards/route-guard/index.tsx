@@ -1,6 +1,6 @@
-import { useMapState } from '@/hooks'
-import { IAuthStore } from '@/store/@interfaces/auth.interface'
+import { useStore } from 'react-redux'
 import { useRouter } from 'next/router'
+import { RootState } from '@/store/@types'
 import React, { useEffect, useState } from 'react'
 
 interface RouteGuardProps {
@@ -8,8 +8,7 @@ interface RouteGuardProps {
 }
 const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     const router = useRouter()
-    const { token } = useMapState('auth') as IAuthStore
-
+    const store = useStore()
     const [authorized, setAuthorized] = useState(false)
 
     useEffect(() => {
@@ -26,9 +25,13 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     }, [])
 
     function authCheck(url: string) {
-        const hasToken = !!token
+        const { auth } = store.getState() as RootState
+
+        const hasToken = !!auth.token
         const publicPaths = ['/login']
         const path = url.split('?')[0]
+
+        console.log('HAS TOKEN :', hasToken, path)
 
         if (path === '/login' && hasToken) {
             setAuthorized(true)
