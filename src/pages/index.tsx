@@ -1,21 +1,20 @@
 import React from 'react'
-import Logo from '@/assets/vercel.png'
+import { useRouter } from 'next/router'
 import Styles from '@/styles/pages/home'
-import AppHead from '@/components/common/app-head'
-import { THEME_ITEMS } from '@/contants/theme-type'
-import { uiActions } from '@/store/reducers/ui.reducer'
-import LogoCBYKWhite from '@/assets/images/cbyk-logo-white.png'
 import QRIcon from '@/assets/images/icons/qr.png'
+import AppHead from '@/components/common/app-head'
 import EditIcon from '@/assets/images/icons/edit.png'
+import LogoCBYKWhite from '@/assets/images/cbyk-logo-white.png'
 
 const Home: React.FC = () => {
     const fake_avatar = `https://www.w3schools.com/howto/img_avatar.png`
+    const router = useRouter()
 
     const actions = [
         {
             icon: QRIcon,
             label: 'Ver QrCode',
-            action: () => {}
+            action: () => router.push('/share-profile')
         },
         {
             icon: EditIcon,
