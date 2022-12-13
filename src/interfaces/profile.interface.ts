@@ -1,6 +1,7 @@
 export interface IProfile {
-    id: string
+    id?: string
     role: string
+    name: string
     email: string
     surname: string
     websiteUrl: string

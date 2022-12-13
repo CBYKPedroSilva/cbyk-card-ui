@@ -19,13 +19,13 @@ const Home: React.FC = () => {
         {
             icon: EditIcon,
             label: 'Editar dados',
-            action: () => {}
+            action: () => router.push('/register')
         }
     ]
 
     return (
         <>
-            <AppHead title="Hello World" />
+            <AppHead title="Home" />
 
             <Styles.Container>
                 <Styles.SmallImage src={LogoCBYKWhite} alt="CBYK" />
