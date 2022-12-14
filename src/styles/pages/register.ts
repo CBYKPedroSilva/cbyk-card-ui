@@ -2,7 +2,9 @@ import styled from 'styled-components'
 import tw from 'twin.macro'
 import { AppButton, AppContainer } from '../css/ts/components'
 
-const Container = styled(AppContainer)``
+const Container = styled(AppContainer)`
+    ${tw`max-w-[500px]`}
+`
 
 const Header = styled.header`
     ${tw`grid grid-cols-3`}

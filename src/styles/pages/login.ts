@@ -15,7 +15,7 @@ const Title = styled.h2`
 `
 
 const Form = styled.form`
-    ${tw`w-full`}
+    ${tw`w-full max-w-[500px]`}
 `
 
 const Button = styled(AppButton)`

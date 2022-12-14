@@ -28,15 +28,17 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
         const { auth } = store.getState() as RootState
 
         const hasToken = !!auth.token
-        const publicPaths = ['/login']
-        const path = url.split('?')[0]
-
-        console.log('HAS TOKEN :', hasToken, path)
+        const [fullPath] = url.split('?')
+        const [, path] = fullPath.split('/')
+        const publicPaths = ['login', 'profile']
+        const isPublic = path
+            ? publicPaths.some(item => item.startsWith(path))
+            : false
 
         if (path === '/login' && hasToken) {
             setAuthorized(true)
             router.push({ pathname: '/' })
-        } else if (!hasToken && !publicPaths.includes(path)) {
+        } else if (!hasToken && !isPublic) {
             setAuthorized(false)
             router.push({ pathname: '/login' })
         } else setAuthorized(true)

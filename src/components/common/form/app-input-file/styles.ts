@@ -5,11 +5,11 @@ import tw from 'twin.macro'
 const Wrapper = styled(AppFormGroup)``
 
 const Container = styled(AppFormGroup)`
-    ${tw`flex mb-0`}
+    ${tw`flex mb-0 relative`}
 `
 
 const Input = styled.input`
-    ${tw`flex-1 rounded-r-none z-[-1] absolute opacity-0`}
+    ${tw`flex-1 rounded-r-none z-[-1] absolute left-0 opacity-0`}
     border-top-right-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
 `
