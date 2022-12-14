@@ -3,15 +3,19 @@ import tw from 'twin.macro'
 import { AppButton, AppContainer } from '../css/ts/components'
 
 const Container = styled(AppContainer)`
-    ${tw`flex min-h-full flex-col items-center justify-center`}
+    ${tw`flex min-h-full flex-col items-center justify-between`}
+`
+
+const View = styled.div`
+    ${tw`w-full flex flex-col items-center justify-center`}
 `
 
 const Image = styled.img`
-    ${tw`mb-6`}
+    ${tw`mb-2 mt-24 w-[74px]`}
 `
 
 const Title = styled.h2`
-    ${tw`text-lg mb-14`}
+    ${tw`text-[12px] mb-14`}
 `
 
 const Form = styled.form`
@@ -19,13 +23,19 @@ const Form = styled.form`
 `
 
 const Button = styled(AppButton)`
-    ${tw`w-full mt-8`}
+    ${tw`w-full mt-8 mb-4`}
+`
+
+const Link = styled.a`
+    ${tw`underline`}
 `
 
 export default {
     Container,
+    Button,
     Title,
     Image,
     Form,
-    Button
+    View,
+    Link
 }

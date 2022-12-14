@@ -1,17 +1,53 @@
-import React, { useState } from 'react'
+import { useQRCode } from 'next-qrcode'
 import Styles from '@/styles/pages/share-profile'
+import React, { useEffect, useState } from 'react'
 import AppHead from '@/components/common/app-head'
+import { QRCodeOptions } from 'next-qrcode/dist/useQRCode'
 import UserHeader, { IUserHeaderData } from '@/components/common/user-header'
 
 const ShareProfile: React.FC = () => {
-    const fake_qr = `https://farm4.static.flickr.com/3217/5756356352_1af777b771_b.jpg`
-    const [qrCode, setQrCode] = useState(fake_qr)
+    const { Canvas } = useQRCode()
+    const [link, setLink] = useState('')
     const [userData, setUserData] = useState<IUserHeaderData>({
         name: 'Guilherme',
         surname: 'Muller',
         role: 'Sócio-diretor'
     })
-    const handleShare = () => {}
+
+    const qrOption: QRCodeOptions = {
+        quality: 0.5,
+        level: 'H',
+        width: 360,
+        scale: 4,
+        color: {
+            dark: '#E6E6E6',
+            light: '#161516'
+        }
+    }
+
+    useEffect(() => {
+        buildLink()
+    }, [])
+
+    const buildLink = () => {
+        const profileId = 1
+        const domain = window.location.origin
+        setLink(`${domain}/profile/${profileId}`)
+    }
+
+    const handleShare = async () => {
+        try {
+            const shareData = {
+                url: link,
+                title: 'Cartão de visitas',
+                text: `Este é o cartão de visitas de ${userData.name} ${userData.surname}`
+            }
+
+            await navigator.share(shareData)
+        } catch (err) {
+            console.error(err)
+        }
+    }
 
     return (
         <>
@@ -21,7 +57,7 @@ const ShareProfile: React.FC = () => {
                 <UserHeader data={userData} />
 
                 <Styles.Card>
-                    <Styles.Image src={qrCode} />
+                    {!!link && <Canvas text={link} options={qrOption} />}
                 </Styles.Card>
 
                 <Styles.Button onClick={handleShare}>

@@ -30,7 +30,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
         const hasToken = !!auth.token
         const [fullPath] = url.split('?')
         const [, path] = fullPath.split('/')
-        const publicPaths = ['login', 'profile']
+        const publicPaths = ['login', 'profile', 'register']
         const isPublic = path
             ? publicPaths.some(item => item.startsWith(path))
             : false

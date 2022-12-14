@@ -19,7 +19,7 @@ const Home: React.FC = () => {
         {
             icon: EditIcon,
             label: 'Editar dados',
-            action: () => router.push('/register')
+            action: () => router.push('/register-profile')
         }
     ]
 

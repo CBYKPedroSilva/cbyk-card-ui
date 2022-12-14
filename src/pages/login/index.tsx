@@ -4,12 +4,12 @@ import { setLoading } from '@/hooks'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import Styles from '@/styles/pages/login'
-import Logo from '@/assets/images/logo.png'
 import AppHead from '@/components/common/app-head'
 import { IAuth } from '@/interfaces/auth.interface'
 import { yupResolver } from '@hookform/resolvers/yup'
 import AppInput from '@/components/common/form/app-input'
 import { authActions } from '@/store/reducers/auth.reducer'
+import CBYKWhiteLogo from '@/assets/images/cbyk-logo-white.png'
 import AppInputPassword from '@/components/common/form/app-input-password'
 
 const Login: React.FC = () => {
@@ -54,8 +54,10 @@ const Login: React.FC = () => {
             <AppHead title="Login" />
 
             <Styles.Container>
-                <Styles.Image src={Logo} alt="Cartão de visitas" />
-                <Styles.Title>Cartão de visitas CBYK</Styles.Title>
+                <Styles.View>
+                    <Styles.Image src={CBYKWhiteLogo} alt="CBYK" />
+                    <Styles.Title>Cartão de visitas CBYK</Styles.Title>
+                </Styles.View>
 
                 <Styles.Form onSubmit={handleSubmit(handleSubmitForm)}>
                     <AppInput
@@ -64,16 +66,23 @@ const Login: React.FC = () => {
                         label="e-mail"
                         register={register}
                         error={errors.email}
+                        placeholder="email@cbyk.com.br"
                     />
 
                     <AppInputPassword
                         id="password"
                         register={register}
+                        placeholder="******"
                         error={errors.password}
                     />
-
-                    <Styles.Button type="submit">Entrar</Styles.Button>
                 </Styles.Form>
+
+                <Styles.View>
+                    <Styles.Button type="submit">Entrar</Styles.Button>
+                    <Styles.Link onClick={() => router.push('/register')}>
+                        Criar conta
+                    </Styles.Link>
+                </Styles.View>
             </Styles.Container>
         </>
     )

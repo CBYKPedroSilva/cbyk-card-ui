@@ -12,17 +12,16 @@ import AppInput from '@/components/common/form/app-input'
 import { IProfileRegister } from '@/interfaces/profile.interface'
 import AppInputFile from '@/components/common/form/app-input-file'
 
-const Register: React.FC = () => {
+const RegisterProfile: React.FC = () => {
     const router = useRouter()
     const [imageModel, setImageModel] = useState<FileList | never[]>([])
 
-    const registerForm = yup.object().shape({
+    const authForm = yup.object().shape({
         websiteUrl: yup.string(),
         linkedinUrl: yup.string(),
         name: yup.string().required('Insira o seu nome'),
         role: yup.string().required('Insira o seu email'),
         email: yup.string().required('Insira o seu email'),
-        password: yup.string().required('Insira uma senha'),
         surname: yup.string().required('Insira o seu sobrenome'),
         mobileNumber: yup.string().required('Insira o seu telefone'),
         whatsAppNumber: yup.string().required('Insira o seu whatsApp')
@@ -33,7 +32,7 @@ const Register: React.FC = () => {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm<IProfileRegister>({ resolver: yupResolver(registerForm) })
+    } = useForm<IProfileRegister>({ resolver: yupResolver(authForm) })
 
     const handleSubmitForm = async (model: IProfileRegister) => {
         setLoading(true, 'Enviando o seu contato...')
@@ -128,15 +127,6 @@ const Register: React.FC = () => {
                         error={errors.linkedinUrl}
                         placeholder="Digite a URL do seui LinkedIn"
                     />
-
-                    <AppInput
-                        id="password"
-                        label="Senha"
-                        type="password"
-                        register={register}
-                        error={errors.password}
-                        placeholder="Digite uma senha"
-                    />
                     <Styles.Button type="submit">Criar</Styles.Button>
                 </Styles.Form>
             </Styles.Container>
@@ -144,4 +134,4 @@ const Register: React.FC = () => {
     )
 }
 
-export default Register
+export default RegisterProfile

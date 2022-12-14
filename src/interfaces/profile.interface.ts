@@ -12,3 +12,7 @@ export interface IProfile {
     companyAvatar: string
     whatsAppNumber: number
 }
+
+export interface IProfileRegister extends IProfile {
+    password: string
+}

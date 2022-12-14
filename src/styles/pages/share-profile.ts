@@ -4,12 +4,12 @@ import styled from 'styled-components'
 import { AppButton, AppContainer } from '../css/ts/components'
 
 const Container = styled(AppContainer)`
-    ${tw`pt-16 min-h-screen`}
+    ${tw`pt-16 min-h-screen flex flex-col items-center`}
     background: ${({ theme }) => theme.colors.bgLight};
 `
 
 const Card = styled.article`
-    ${tw`my-8 flex flex-col items-center justify-center rounded-3xl p-8 py-28 relative`}
+    ${tw`my-8 flex flex-col items-center justify-center rounded-3xl p-8 pt-16 pb-6 relative w-full max-w-[500px]`}
     background: ${({ theme }) => theme.colors.bgPrimary};
 
     &:after {
@@ -25,7 +25,7 @@ const Image = styled.img`
 `
 
 const Button = styled(AppButton).attrs(fadeIn.up)`
-    ${tw`w-full flex items-center justify-center text-lg font-bold`}
+    ${tw`w-full flex items-center justify-center text-lg font-bold max-w-[500px]`}
     color: ${({ theme }) => theme.colors.primary};
     background: ${({ theme }) => theme.colors.bgLight};
     box-shadow: 4.57803px 4.57803px 17.1676px rgba(0, 0, 0, 0.1);
