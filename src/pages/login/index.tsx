@@ -6,14 +6,21 @@ import { useForm } from 'react-hook-form'
 import Styles from '@/styles/pages/login'
 import AppHead from '@/components/common/app-head'
 import { IAuth } from '@/interfaces/auth.interface'
+import { decodeJWT } from '@/functions/jwt.function'
+import { AuthService } from '@/services/auth.service'
 import { yupResolver } from '@hookform/resolvers/yup'
 import AppInput from '@/components/common/form/app-input'
 import { authActions } from '@/store/reducers/auth.reducer'
+import { ProfileService } from '@/services/profile.service'
 import CBYKWhiteLogo from '@/assets/images/cbyk-logo-white.png'
 import AppInputPassword from '@/components/common/form/app-input-password'
+import { profileActions } from '@/store/reducers/profile.reducer'
 
 const Login: React.FC = () => {
     const router = useRouter()
+    const authService = new AuthService()
+    const profileService = new ProfileService()
+
     const authForm = yup.object().shape({
         email: yup.string().required('Insira o seu email'),
         password: yup.string().required('Insira a sua senha')
@@ -30,22 +37,37 @@ const Login: React.FC = () => {
         setLoading(true, 'Enviando o seu contato...')
 
         try {
-            console.log('credentials :', model)
-            authActions.setToken('Teste')
-            authActions.setUser({
-                code: 1234,
-                id: 'user_id',
-                email: model.email
-            })
+            const { data } = await authService.login(model)
+            await setAuthData(data.access_token)
+            await setProfile(model.email)
 
-            setTimeout(() => {
-                router.push('/')
-                reset()
-            }, 2000)
+            router.push('/')
+            reset()
         } catch (error) {
             console.log('Error :', error)
         } finally {
             setLoading(false)
+        }
+    }
+
+    const setAuthData = async (token: string) => {
+        authActions.setToken(token)
+        const user = await decodeJWT(token)
+
+        authActions.setUser({
+            id: user.id,
+            code: user.code,
+            email: user.email
+        })
+    }
+
+    const setProfile = async (email: string) => {
+        try {
+            const { data } = await profileService.getByEmail(email)
+            console.log('profile ::::::::', data)
+            profileActions.setProfile(data)
+        } catch (error) {
+            throw error
         }
     }
 
@@ -59,7 +81,10 @@ const Login: React.FC = () => {
                     <Styles.Title>Cartão de visitas CBYK</Styles.Title>
                 </Styles.View>
 
-                <Styles.Form onSubmit={handleSubmit(handleSubmitForm)}>
+                <Styles.Form
+                    id="register-form"
+                    onSubmit={handleSubmit(handleSubmitForm)}
+                >
                     <AppInput
                         id="email"
                         type="email"
@@ -78,7 +103,9 @@ const Login: React.FC = () => {
                 </Styles.Form>
 
                 <Styles.View>
-                    <Styles.Button type="submit">Entrar</Styles.Button>
+                    <Styles.Button form="register-form" type="submit">
+                        Entrar
+                    </Styles.Button>
                     <Styles.Link onClick={() => router.push('/register')}>
                         Criar conta
                     </Styles.Link>

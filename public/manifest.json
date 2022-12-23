@@ -1,0 +1,38 @@
+{
+    "theme_color": "#1A1A2E",
+    "background_color": "#1A1A2E",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "name": "Desafio 90",
+    "short_name": "Desafio 90",
+    "description": "Vamos ao desafio",
+    "icons": [
+        {
+            "src": "/icon-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-1024x1024.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        }
+    ]
+}

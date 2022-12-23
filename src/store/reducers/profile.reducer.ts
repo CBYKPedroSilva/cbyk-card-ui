@@ -2,14 +2,14 @@ import store from '@/store'
 import { createSlice } from '@reduxjs/toolkit'
 import { IUser } from '@/interfaces/user.interface'
 import { IProfile } from '@/interfaces/profile.interface'
-import { IRegisterStore } from '../@interfaces/register.interface'
+import { IProfileStore } from '../@interfaces/profile.interface'
 
-const initialState: IRegisterStore = {
+const initialState: IProfileStore = {
     profile: {} as IProfile
 }
 
 const { actions: mutations, reducer } = createSlice({
-    name: 'register',
+    name: 'profile',
     initialState,
     reducers: {
         setProfile(state, { payload }) {
@@ -21,9 +21,9 @@ const { actions: mutations, reducer } = createSlice({
     }
 })
 
-export const registerActions = {
+export const profileActions = {
     reset: () => store.dispatch(mutations.reset()),
-    setProfile: (value: IUser) => store.dispatch(mutations.setProfile(value))
+    setProfile: (value: IProfile) => store.dispatch(mutations.setProfile(value))
 }
 
 export default reducer

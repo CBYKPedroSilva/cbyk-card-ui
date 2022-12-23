@@ -8,12 +8,17 @@ import Styles from '@/styles/pages/register'
 import { RiArrowLeftFill } from 'react-icons/ri'
 import AppHead from '@/components/common/app-head'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { ImageService } from '@/services/image.service'
 import AppInput from '@/components/common/form/app-input'
+import { ProfileService } from '@/services/profile.service'
 import { IProfileRegister } from '@/interfaces/profile.interface'
 import AppInputFile from '@/components/common/form/app-input-file'
 
 const Register: React.FC = () => {
     const router = useRouter()
+    const imageService = new ImageService()
+    const profileService = new ProfileService()
+
     const [imageModel, setImageModel] = useState<FileList | never[]>([])
 
     const registerForm = yup.object().shape({
@@ -29,24 +34,51 @@ const Register: React.FC = () => {
     })
 
     const {
-        reset,
         register,
         handleSubmit,
         formState: { errors }
     } = useForm<IProfileRegister>({ resolver: yupResolver(registerForm) })
 
     const handleSubmitForm = async (model: IProfileRegister) => {
-        setLoading(true, 'Enviando o seu contato...')
+        setLoading(true, 'Criando perfil')
 
         try {
+            let profileAvatar = ''
             const file = imageModel[0]
-            console.log('Model :', model, file)
+            if (file) profileAvatar = await createImage(file)
+
+            const createDTO = { ...model, profileAvatar }
+            createDTO.mobileNumber = Number(createDTO.mobileNumber)
+            createDTO.whatsAppNumber = Number(createDTO.whatsAppNumber)
+
+            await createProfile(createDTO)
+            router.push('/login')
         } catch (error) {
             console.log('Error :', error)
         } finally {
             setLoading(false)
         }
     }
+
+    const createImage = async (file: File) => {
+        try {
+            const {
+                data: { data }
+            } = await imageService.upload(file, 'teste')
+            return data.image.url
+        } catch (error) {
+            throw new Error('Erro ao fazer upload de imagem')
+        }
+    }
+
+    const createProfile = async (model: IProfileRegister) => {
+        try {
+            await profileService.create(model)
+        } catch (error) {
+            throw new Error('Erro ao criar perfil')
+        }
+    }
+
     return (
         <>
             <AppHead title="Cadastro" />

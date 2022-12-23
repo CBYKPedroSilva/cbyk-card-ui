@@ -1,5 +1,5 @@
 import { IProfile } from '@/interfaces/profile.interface'
 
-export interface IRegisterStore {
+export interface IProfileStore {
     profile: IProfile
 }

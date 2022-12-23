@@ -47,6 +47,12 @@ export default class MyDocument extends Document {
         return (
             <Html lang="pt">
                 <Head>
+                    <link rel="manifest" href="/manifest.json" />
+                    <link rel="shortcut icon" href="/apple-icon.png" />
+                    <link rel="apple-touch-icon" href="/apple-icon.png" />
+
+                    <meta name="theme-color" content="#1A1A2E" />
+
                     <link
                         rel="preconnect"
                         href="https://fonts.googleapis.com"
@@ -56,8 +62,6 @@ export default class MyDocument extends Document {
                         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
                         rel="stylesheet"
                     />
-
-                    <link rel="shortcut icon" href="/favicon.png" />
                 </Head>
                 <body>
                     <Main />
