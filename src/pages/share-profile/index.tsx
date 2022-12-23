@@ -1,17 +1,20 @@
+import { useMapState } from '@/hooks'
 import { useQRCode } from 'next-qrcode'
 import Styles from '@/styles/pages/share-profile'
 import React, { useEffect, useState } from 'react'
 import AppHead from '@/components/common/app-head'
 import { QRCodeOptions } from 'next-qrcode/dist/useQRCode'
+import { IProfileStore } from '@/store/@interfaces/profile.interface'
 import UserHeader, { IUserHeaderData } from '@/components/common/user-header'
 
 const ShareProfile: React.FC = () => {
     const { Canvas } = useQRCode()
     const [link, setLink] = useState('')
+    const { profile } = useMapState('profile') as IProfileStore
     const [userData, setUserData] = useState<IUserHeaderData>({
-        name: 'Guilherme',
-        surname: 'Muller',
-        role: 'Sócio-diretor'
+        role: '',
+        name: '',
+        surname: ''
     })
 
     const qrOption: QRCodeOptions = {
@@ -27,12 +30,20 @@ const ShareProfile: React.FC = () => {
 
     useEffect(() => {
         buildLink()
+        initUserData()
     }, [])
 
     const buildLink = () => {
-        const profileId = 1
         const domain = window.location.origin
-        setLink(`${domain}/profile/${profileId}`)
+        setLink(`${domain}/profile/${profile._id}`)
+    }
+
+    const initUserData = () => {
+        setUserData({
+            role: profile.role,
+            name: profile.name,
+            surname: profile.surname
+        })
     }
 
     const handleShare = async () => {

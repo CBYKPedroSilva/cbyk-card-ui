@@ -5,6 +5,8 @@ import AppHead from '@/components/common/app-head'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { IProfile } from '@/interfaces/profile.interface'
 import UserHeader, { IUserHeaderData } from '@/components/common/user-header'
+import { ProfileService } from '@/services/profile.service'
+import { WhatsAppService } from '@/services/_whatsapp.service'
 
 interface IProfileProps {
     headerData: IUserHeaderData
@@ -13,34 +15,33 @@ interface IProfileProps {
 
 const Profile: React.FC<IProfileProps> = props => {
     const { headerData, profile } = props
+    const whatsAppService = new WhatsAppService()
 
     const actions = [
         {
             icon: Icons.WhatsApp,
             title: 'WhatsApp',
-            action: () => {}
+            action: () =>
+                whatsAppService.sendMessage(`55${profile.whatsAppNumber}`, '')
         },
         {
             icon: Icons.Phone,
             title: 'Celular',
-            action: () => {}
+            action: () => open(`tel:${profile.mobileNumber}`)
         },
         {
             icon: Icons.Mail,
             title: 'E-mail',
-            action: () => {}
+            action: () => open(`mailto:${profile.email}`)
         },
         {
             icon: Icons.Linkedin,
             title: 'LinkedIn',
-            action: () => {}
-        },
-        {
-            icon: Icons.Globe,
-            title: 'Link',
-            action: () => {}
+            action: () => open(profile.linkedinUrl)
         }
     ]
+
+    const open = (url: string) => window.open(url, '_blank')
 
     return (
         <>
@@ -55,7 +56,11 @@ const Profile: React.FC<IProfileProps> = props => {
 
                 <Styles.ActionGroup>
                     {actions.map((item, index) => (
-                        <Styles.Button key={index} title={item.title}>
+                        <Styles.Button
+                            key={index}
+                            title={item.title}
+                            onClick={item.action}
+                        >
                             <Styles.Icon src={item.icon} alt={item.title} />
                         </Styles.Button>
                     ))}
@@ -73,30 +78,27 @@ export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
 
 export const getStaticProps: GetStaticProps = async context => {
     const profileId = context.params?.id
-    const fake_avatar = `https://www.w3schools.com/howto/img_avatar.png`
 
-    const profile: IProfile = {
-        id: String(profileId),
-        name: 'Pedro',
-        surname: 'Silva',
-        companyAvatar: '',
-        companyName: 'CBYK',
-        websiteUrl: 'websiteUrl',
-        mobileNumber: 11958885825,
-        email: 'teste@example.com',
-        linkedinUrl: 'linkedinUrl',
-        profileAvatar: fake_avatar,
-        whatsAppNumber: 11958885825,
-        role: 'Desenvolvedor Frontend'
+    let profile: IProfile = {} as IProfile
+    let headerData: IUserHeaderData = {} as IUserHeaderData
+
+    let props: IProfileProps = { headerData, profile }
+
+    try {
+        const profileService = new ProfileService()
+        const { data } = await profileService.getById(String(profileId))
+
+        props = {
+            profile: data,
+            headerData: {
+                role: data.role,
+                name: data.name,
+                surname: data.surname
+            }
+        }
+
+        return { props }
+    } catch (error) {
+        return { props }
     }
-
-    const headerData: IUserHeaderData = {
-        role: profile.role,
-        name: profile.name,
-        surname: profile.surname
-    }
-
-    const props: IProfileProps = { headerData, profile }
-
-    return { props }
 }

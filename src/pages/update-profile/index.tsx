@@ -12,15 +12,14 @@ import { ImageService } from '@/services/image.service'
 import AppInput from '@/components/common/form/app-input'
 import { IProfile } from '@/interfaces/profile.interface'
 import { ProfileService } from '@/services/profile.service'
+import { profileActions } from '@/store/reducers/profile.reducer'
 import AppInputFile from '@/components/common/form/app-input-file'
 import { IProfileStore } from '@/store/@interfaces/profile.interface'
-import { profileActions } from '@/store/reducers/profile.reducer'
 
 const RegisterProfile: React.FC = () => {
     const router = useRouter()
     const imageService = new ImageService()
     const profileService = new ProfileService()
-
     const { profile } = useMapState('profile') as IProfileStore
     const [imageModel, setImageModel] = useState<FileList | never[]>([])
 

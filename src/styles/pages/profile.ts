@@ -18,7 +18,7 @@ const Image = styled.img`
 `
 
 const ActionGroup = styled.article`
-    ${tw`grid gap-6 grid-cols-5`}
+    ${tw`grid gap-6 grid-cols-4`}
 `
 
 const Button = styled(AppButton).attrs(fadeIn.up)`
