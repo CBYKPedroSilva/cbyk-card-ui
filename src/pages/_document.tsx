@@ -51,7 +51,7 @@ export default class MyDocument extends Document {
                     <link rel="shortcut icon" href="/apple-icon.png" />
                     <link rel="apple-touch-icon" href="/apple-icon.png" />
 
-                    <meta name="theme-color" content="#1A1A2E" />
+                    <meta name="theme-color" content="#161516" />
 
                     <link
                         rel="preconnect"

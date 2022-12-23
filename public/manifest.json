@@ -1,12 +1,12 @@
 {
-    "theme_color": "#1A1A2E",
-    "background_color": "#1A1A2E",
+    "theme_color": "#161516",
+    "background_color": "#161516",
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Desafio 90",
-    "short_name": "Desafio 90",
-    "description": "Vamos ao desafio",
+    "name": "CBYK Card",
+    "short_name": "CBYK Card",
+    "description": "Cartão de visitas CBYK",
     "icons": [
         {
             "src": "/icon-128x128.png",
