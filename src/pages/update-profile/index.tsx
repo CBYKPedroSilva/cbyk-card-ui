@@ -15,10 +15,12 @@ import { ProfileService } from '@/services/profile.service'
 import { profileActions } from '@/store/reducers/profile.reducer'
 import AppInputFile from '@/components/common/form/app-input-file'
 import { IProfileStore } from '@/store/@interfaces/profile.interface'
+import { AlertService } from '@/services/_alert.service'
 
 const RegisterProfile: React.FC = () => {
     const router = useRouter()
     const imageService = new ImageService()
+    const alertService = new AlertService()
     const profileService = new ProfileService()
     const { profile } = useMapState('profile') as IProfileStore
     const [imageModel, setImageModel] = useState<FileList | never[]>([])
@@ -67,7 +69,8 @@ const RegisterProfile: React.FC = () => {
 
         try {
             const file = imageModel[0]
-            let profileAvatar = model.profileAvatar
+            let profileAvatar = profile.profileAvatar
+
             if (file) profileAvatar = await createImage(file)
 
             const createDTO = { ...model, profileAvatar }
@@ -76,9 +79,11 @@ const RegisterProfile: React.FC = () => {
 
             await updateProfile(createDTO)
             profileActions.setProfile({ ...profile, ...createDTO })
+            alertService.success('Perfil atualizado com sucesso')
 
             router.push('/')
         } catch (error) {
+            alertService.error('Ocorreu um erro ao atualizar perfil')
             console.log('Error :', error)
         } finally {
             setLoading(false)
@@ -91,7 +96,7 @@ const RegisterProfile: React.FC = () => {
 
             const {
                 data: { data }
-            } = await imageService.upload(file, 'teste')
+            } = await imageService.upload(file, file.name)
             return data.image.url
         } catch (error) {
             throw new Error('Erro ao fazer upload de imagem')
@@ -109,7 +114,7 @@ const RegisterProfile: React.FC = () => {
 
     return (
         <>
-            <AppHead title="Cadastro" />
+            <AppHead title="Atualizar Perfil" />
 
             <Styles.Container>
                 <Styles.Header>
@@ -119,7 +124,7 @@ const RegisterProfile: React.FC = () => {
 
                     <Styles.View>
                         <Styles.Image src={Logo} alt="Cartão de visitas" />
-                        <Styles.Title>Cadastro</Styles.Title>
+                        <Styles.Title>Atualizar Perfil</Styles.Title>
                     </Styles.View>
                 </Styles.Header>
 

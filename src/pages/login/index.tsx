@@ -9,16 +9,18 @@ import { IAuth } from '@/interfaces/auth.interface'
 import { decodeJWT } from '@/functions/jwt.function'
 import { AuthService } from '@/services/auth.service'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { AlertService } from '@/services/_alert.service'
 import AppInput from '@/components/common/form/app-input'
 import { authActions } from '@/store/reducers/auth.reducer'
 import { ProfileService } from '@/services/profile.service'
 import CBYKWhiteLogo from '@/assets/images/cbyk-logo-white.png'
-import AppInputPassword from '@/components/common/form/app-input-password'
 import { profileActions } from '@/store/reducers/profile.reducer'
+import AppInputPassword from '@/components/common/form/app-input-password'
 
 const Login: React.FC = () => {
     const router = useRouter()
     const authService = new AuthService()
+    const alertService = new AlertService()
     const profileService = new ProfileService()
 
     const authForm = yup.object().shape({
@@ -44,7 +46,7 @@ const Login: React.FC = () => {
             router.push('/')
             reset()
         } catch (error) {
-            console.log('Error :', error)
+            alertService.error('Ocorreu um erro ao realizar login')
         } finally {
             setLoading(false)
         }

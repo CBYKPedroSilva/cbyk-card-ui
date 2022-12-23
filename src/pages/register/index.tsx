@@ -9,6 +9,7 @@ import { RiArrowLeftFill } from 'react-icons/ri'
 import AppHead from '@/components/common/app-head'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ImageService } from '@/services/image.service'
+import { AlertService } from '@/services/_alert.service'
 import AppInput from '@/components/common/form/app-input'
 import { ProfileService } from '@/services/profile.service'
 import { IProfileRegister } from '@/interfaces/profile.interface'
@@ -17,6 +18,7 @@ import AppInputFile from '@/components/common/form/app-input-file'
 const Register: React.FC = () => {
     const router = useRouter()
     const imageService = new ImageService()
+    const alertService = new AlertService()
     const profileService = new ProfileService()
 
     const [imageModel, setImageModel] = useState<FileList | never[]>([])
@@ -52,9 +54,11 @@ const Register: React.FC = () => {
             createDTO.whatsAppNumber = Number(createDTO.whatsAppNumber)
 
             await createProfile(createDTO)
+            alertService.success('Perfil cadastrado com sucesso')
+
             router.push('/login')
         } catch (error) {
-            console.log('Error :', error)
+            alertService.error('Ocorreu um erro ao cadastrar perfil')
         } finally {
             setLoading(false)
         }
@@ -64,7 +68,7 @@ const Register: React.FC = () => {
         try {
             const {
                 data: { data }
-            } = await imageService.upload(file, 'teste')
+            } = await imageService.upload(file, file.name)
             return data.image.url
         } catch (error) {
             throw new Error('Erro ao fazer upload de imagem')
