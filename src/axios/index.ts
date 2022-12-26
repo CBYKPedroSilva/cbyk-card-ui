@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from '@/store'
 
 export const httpClient = axios.create({
-    baseURL: 'http://146.190.125.152:3000',
+    baseURL: 'https://visita-api.cbyk.com.br',
     headers: {
         Accept: 'application/json',
         'content-type': 'application/json'
