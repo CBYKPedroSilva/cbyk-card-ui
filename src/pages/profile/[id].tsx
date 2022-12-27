@@ -6,6 +6,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { IProfile } from '@/interfaces/profile.interface'
 import { ProfileService } from '@/services/profile.service'
 import { WhatsAppService } from '@/services/_whatsapp.service'
+import useWindowDimensions from '@/hooks/window-dimentions.hook'
 import UserHeader, { IUserHeaderData } from '@/components/common/user-header'
 
 interface IProfileProps {
@@ -15,7 +16,9 @@ interface IProfileProps {
 
 const Profile: React.FC<IProfileProps> = props => {
     const { headerData, profile } = props
+    const { freeHeight } = useWindowDimensions()
     const whatsAppService = new WhatsAppService()
+
     const initialName =
         profile && profile.name ? `${profile.name[0]}${profile.surname[0]}` : ''
 
@@ -53,7 +56,7 @@ const Profile: React.FC<IProfileProps> = props => {
         <>
             <AppHead title="Perfil" />
 
-            <Styles.Container>
+            <Styles.Container paddingBottom={freeHeight}>
                 <Styles.Content>
                     <UserHeader data={headerData} />
 

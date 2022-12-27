@@ -3,9 +3,13 @@ import { fadeIn } from '../animation'
 import styled from 'styled-components'
 import { AppButton, AppContainer } from '../css/ts/components'
 
-const Container = styled(AppContainer)`
+interface ContainerProps {
+    paddingBottom?: number
+}
+const Container = styled(AppContainer)<ContainerProps>`
     ${tw`min-h-screen flex justify-center`}
     background: ${({ theme }) => theme.colors.bgLight};
+    padding-bottom: ${({ paddingBottom }) => `${paddingBottom}px`};
 `
 
 const Content = styled.article`
