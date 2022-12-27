@@ -9,7 +9,7 @@ interface ContainerProps {
 const Container = styled(AppContainer)<ContainerProps>`
     ${tw`min-h-screen flex justify-center`}
     background: ${({ theme }) => theme.colors.bgLight};
-    padding-bottom: ${({ paddingBottom }) => `${paddingBottom}px`};
+    padding-bottom: ${({ paddingBottom }) => `calc(${paddingBottom}px + 12vh)`};
 `
 
 const Content = styled.article`
