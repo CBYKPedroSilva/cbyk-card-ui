@@ -17,6 +17,7 @@ import { ProfileService } from '@/services/profile.service'
 import { profileActions } from '@/store/reducers/profile.reducer'
 import AppInputFile from '@/components/common/form/app-input-file'
 import { IProfileStore } from '@/store/@interfaces/profile.interface'
+import ModalCropper from '@/components/common/modal-cropper'
 
 const RegisterProfile: React.FC = () => {
     const router = useRouter()
@@ -25,7 +26,11 @@ const RegisterProfile: React.FC = () => {
     const profileService = new ProfileService()
     const phoneNumberMask = useMask('phoneNumber')
     const { profile } = useMapState('profile') as IProfileStore
+
     const [imageModel, setImageModel] = useState<FileList | never[]>([])
+    const [imageCropper, setImageCropper] = useState<File | null>(null)
+    const [imageResult, setImageResult] = useState<File>()
+    const [showModalCropper, setShowModalCropper] = useState(false)
 
     const profileForm = yup.object().shape({
         websiteUrl: yup.string(),
@@ -48,6 +53,13 @@ const RegisterProfile: React.FC = () => {
     useEffect(() => {
         getProfile()
     }, [])
+
+    useEffect(() => {
+        const file = imageModel[0]
+
+        setImageCropper(file ? file : null)
+        setShowModalCropper(!!file)
+    }, [imageModel])
 
     const getProfile = async () => {
         try {
@@ -78,10 +90,8 @@ const RegisterProfile: React.FC = () => {
         setLoading(true, 'Criando perfil')
 
         try {
-            const file = imageModel[0]
             let profileAvatar = profile.profileAvatar
-
-            if (file) profileAvatar = await createImage(file)
+            if (imageResult) profileAvatar = await createImage(imageResult)
 
             const createDTO = { ...model, profileAvatar }
 
@@ -129,6 +139,11 @@ const RegisterProfile: React.FC = () => {
         } catch (error) {
             throw new Error('Erro ao atualizar perfil')
         }
+    }
+
+    const onSubmitCroppie = (result: File) => {
+        setImageResult(result)
+        setShowModalCropper(false)
     }
 
     return (
@@ -220,6 +235,13 @@ const RegisterProfile: React.FC = () => {
                     <Styles.Button type="submit">Salvar</Styles.Button>
                 </Styles.Form>
             </Styles.Container>
+
+            <ModalCropper
+                file={imageModel[0]}
+                isOpen={showModalCropper}
+                onSubmit={onSubmitCroppie}
+                onBackdropClick={() => setShowModalCropper(false)}
+            />
         </>
     )
 }
