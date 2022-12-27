@@ -14,7 +14,9 @@ const { actions: mutations, reducer } = createSlice({
     reducers: {
         setProfile(state, { payload }) {
             state.profile = payload
-            if (payload && payload.name) state.initialName = payload.name[0]
+            if (payload && payload.name) {
+                state.initialName = `${payload.name[0]}${payload.surname[0]}`
+            }
         },
         reset(state) {
             state.profile = {} as IProfile

@@ -242,7 +242,6 @@ const Register: React.FC = () => {
                 file={imageCropper}
                 isOpen={showModalCropper}
                 onSubmit={onSubmitCroppie}
-                onBackdropClick={() => setShowModalCropper(false)}
             />
         </>
     )

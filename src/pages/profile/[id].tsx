@@ -16,26 +16,31 @@ interface IProfileProps {
 const Profile: React.FC<IProfileProps> = props => {
     const { headerData, profile } = props
     const whatsAppService = new WhatsAppService()
-    const initialName = profile && profile.name ? profile.name[0] : ''
+    const initialName =
+        profile && profile.name ? `${profile.name[0]}${profile.surname[0]}` : ''
 
     const actions = [
         {
+            key: 'whatsAppNumber',
             icon: <Icons.WhatsApp />,
             title: 'WhatsApp',
             action: () =>
                 whatsAppService.sendMessage(`55${profile.whatsAppNumber}`, '')
         },
         {
+            key: 'mobileNumber',
             icon: <Icons.Phone />,
             title: 'Celular',
             action: () => open(`tel:0${profile.mobileNumber}`)
         },
         {
+            key: 'email',
             icon: <Icons.Mail />,
             title: 'E-mail',
             action: () => open(`mailto:${profile.email}`)
         },
         {
+            key: 'linkedinUrl',
             icon: <Icons.Linkedin />,
             title: 'LinkedIn',
             action: () => open(profile.linkedinUrl)
