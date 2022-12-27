@@ -16,6 +16,7 @@ interface IProfileProps {
 const Profile: React.FC<IProfileProps> = props => {
     const { headerData, profile } = props
     const whatsAppService = new WhatsAppService()
+    const initialName = profile && profile.name ? profile.name[0] : ''
 
     const actions = [
         {
@@ -52,7 +53,10 @@ const Profile: React.FC<IProfileProps> = props => {
                     <UserHeader data={headerData} />
 
                     <Styles.Figure>
-                        <Styles.Image src={profile.profileAvatar} />
+                        <Styles.Image
+                            src={profile.profileAvatar}
+                            alt={initialName}
+                        />
                     </Styles.Figure>
 
                     <Styles.ActionGroup>
@@ -93,7 +97,7 @@ export const getStaticProps: GetStaticProps = async context => {
     try {
         const profileService = new ProfileService()
         const { data } = await profileService.getById(String(profileId))
-        console.log('::::::::: DATA :::::::::', data)
+
         props = {
             profile: data,
             headerData: {

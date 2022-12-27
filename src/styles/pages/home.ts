@@ -33,7 +33,13 @@ const Figure = styled.figure.attrs(fadeIn.default)`
 `
 
 const Image = styled.img.attrs(fadeIn.default)`
-    ${tw`w-48 h-48 rounded-2xl object-cover`}
+    ${tw`w-48 h-48 rounded-2xl object-cover relative`}
+
+    &:after {
+        content: attr(alt);
+        ${tw`absolute left-0 top-0 w-full h-full flex items-center justify-center text-[6rem]`}
+        background: ${({ theme }) => theme.colors.primary};
+    }
 `
 
 const Content = styled.article`

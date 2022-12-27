@@ -9,16 +9,22 @@ const Container = styled(AppContainer)`
 `
 
 const Content = styled.article`
-    ${tw`py-8 flex flex-col justify-between max-w-[500px]`}
+    ${tw`w-full py-8 flex flex-col justify-between max-w-[500px]`}
 `
 
 const Figure = styled.figure`
-    ${tw`my-8 flex items-center justify-center rounded-3xl`}
+    ${tw`w-full my-8 flex items-center justify-center rounded-3xl`}
     background: ${({ theme }) => theme.colors.bgPrimary};
 `
 
 const Image = styled.img`
-    ${tw`w-full rounded-xl`}
+    ${tw`w-full rounded-xl relative min-h-[10rem]`}
+
+    &:after {
+        content: attr(alt);
+        ${tw`absolute left-0 top-0 w-full h-full flex items-center justify-center text-[6rem]`}
+        background: ${({ theme }) => theme.colors.bgSecondary};
+    }
 `
 
 const ActionGroup = styled.article`

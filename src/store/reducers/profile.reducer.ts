@@ -1,11 +1,11 @@
 import store from '@/store'
 import { createSlice } from '@reduxjs/toolkit'
-import { IUser } from '@/interfaces/user.interface'
 import { IProfile } from '@/interfaces/profile.interface'
 import { IProfileStore } from '../@interfaces/profile.interface'
 
 const initialState: IProfileStore = {
-    profile: {} as IProfile
+    profile: {} as IProfile,
+    initialName: ''
 }
 
 const { actions: mutations, reducer } = createSlice({
@@ -14,6 +14,7 @@ const { actions: mutations, reducer } = createSlice({
     reducers: {
         setProfile(state, { payload }) {
             state.profile = payload
+            if (payload && payload.name) state.initialName = payload.name[0]
         },
         reset(state) {
             state.profile = {} as IProfile

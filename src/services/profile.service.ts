@@ -5,11 +5,11 @@ export class ProfileService {
     private path: string = '/profiles'
 
     getById(id: string) {
-        return httpClient.get(`${this.path}/${id}`)
+        return httpClient.get<IProfile>(`${this.path}/${id}`)
     }
 
     getByEmail(email: string) {
-        return httpClient.get(`${this.path}/byEmail/${email}`)
+        return httpClient.get<IProfile>(`${this.path}/byEmail/${email}`)
     }
 
     create(data: IProfileRegister) {

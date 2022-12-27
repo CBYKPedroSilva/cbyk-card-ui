@@ -9,7 +9,7 @@ import { IProfileStore } from '@/store/@interfaces/profile.interface'
 
 const Home: React.FC = () => {
     const router = useRouter()
-    const { profile } = useMapState('profile') as IProfileStore
+    const { profile, initialName } = useMapState('profile') as IProfileStore
     const actions = [
         {
             icon: <Icons.QR />,
@@ -31,7 +31,10 @@ const Home: React.FC = () => {
                 <Images.CBYKLogoWhite />
 
                 <Styles.Figure>
-                    <Styles.Image src={profile.profileAvatar} alt="avatar" />
+                    <Styles.Image
+                        src={profile.profileAvatar}
+                        alt={initialName}
+                    />
                 </Styles.Figure>
 
                 <Styles.Title>{profile.name}</Styles.Title>

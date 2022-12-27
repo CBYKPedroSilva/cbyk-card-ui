@@ -36,7 +36,7 @@ const Login: React.FC = () => {
     } = useForm<IAuth>({ resolver: yupResolver(authForm) })
 
     const handleSubmitForm = async (model: IAuth) => {
-        setLoading(true, 'Enviando o seu contato...')
+        setLoading(true, 'Realizando login...')
 
         try {
             const { data } = await authService.login(model)
@@ -46,6 +46,7 @@ const Login: React.FC = () => {
             router.push('/')
             reset()
         } catch (error) {
+            authActions.reset()
             alertService.error('Ocorreu um erro ao realizar login')
         } finally {
             setLoading(false)
@@ -66,7 +67,8 @@ const Login: React.FC = () => {
     const setProfile = async (email: string) => {
         try {
             const { data } = await profileService.getByEmail(email)
-            profileActions.setProfile(data)
+            if (!data) throw new Error('Perfil não encontrado')
+            else profileActions.setProfile(data)
         } catch (error) {
             throw error
         }
