@@ -28,7 +28,7 @@ const Profile: React.FC<IProfileProps> = props => {
         {
             icon: <Icons.Phone />,
             title: 'Celular',
-            action: () => open(`tel:${profile.mobileNumber}`)
+            action: () => open(`tel:0${profile.mobileNumber}`)
         },
         {
             icon: <Icons.Mail />,
