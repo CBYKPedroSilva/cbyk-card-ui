@@ -4,6 +4,7 @@ import { setLoading } from '@/hooks'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
+import { useMask } from '@/hooks/mask.hook'
 import Styles from '@/styles/pages/register'
 import { RiArrowLeftFill } from 'react-icons/ri'
 import AppHead from '@/components/common/app-head'
@@ -20,6 +21,7 @@ const Register: React.FC = () => {
     const imageService = new ImageService()
     const alertService = new AlertService()
     const profileService = new ProfileService()
+    const phoneNumberMask = useMask('phoneNumber')
 
     const [imageModel, setImageModel] = useState<FileList | never[]>([])
 
@@ -50,8 +52,17 @@ const Register: React.FC = () => {
             if (file) profileAvatar = await createImage(file)
 
             const createDTO = { ...model, profileAvatar }
-            createDTO.mobileNumber = Number(createDTO.mobileNumber)
-            createDTO.whatsAppNumber = Number(createDTO.whatsAppNumber)
+
+            const rawMobileNumber = phoneNumberMask.getRawValue(
+                String(createDTO.mobileNumber)
+            )
+
+            const rawWhatsAppNumber = phoneNumberMask.getRawValue(
+                String(createDTO.whatsAppNumber)
+            )
+
+            createDTO.mobileNumber = Number(rawMobileNumber)
+            createDTO.whatsAppNumber = Number(rawWhatsAppNumber)
 
             await createProfile(createDTO)
             alertService.success('Perfil cadastrado com sucesso')
@@ -141,6 +152,7 @@ const Register: React.FC = () => {
                         register={register}
                         error={errors.whatsAppNumber}
                         placeholder="(00) 00000-0000"
+                        {...phoneNumberMask.directive}
                     />
 
                     <AppInput
@@ -149,6 +161,7 @@ const Register: React.FC = () => {
                         register={register}
                         error={errors.mobileNumber}
                         placeholder="(00) 00000-0000"
+                        {...phoneNumberMask.directive}
                     />
 
                     <AppInput

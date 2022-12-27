@@ -7,10 +7,10 @@ export interface IProfile {
     websiteUrl: string
     linkedinUrl: string
     companyName: string
-    mobileNumber: number
     profileAvatar: string
     companyAvatar: string
-    whatsAppNumber: number
+    mobileNumber: number | string
+    whatsAppNumber: number | string
 }
 
 export interface IProfileRegister extends IProfile {

@@ -2,6 +2,7 @@ import * as yup from 'yup'
 import Images from '@/assets/images'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
+import { useMask } from '@/hooks/mask.hook'
 import Styles from '@/styles/pages/register'
 import { RiArrowLeftFill } from 'react-icons/ri'
 import React, { useEffect, useState } from 'react'
@@ -9,19 +10,20 @@ import { setLoading, useMapState } from '@/hooks'
 import AppHead from '@/components/common/app-head'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ImageService } from '@/services/image.service'
+import { AlertService } from '@/services/_alert.service'
 import AppInput from '@/components/common/form/app-input'
 import { IProfile } from '@/interfaces/profile.interface'
 import { ProfileService } from '@/services/profile.service'
 import { profileActions } from '@/store/reducers/profile.reducer'
 import AppInputFile from '@/components/common/form/app-input-file'
 import { IProfileStore } from '@/store/@interfaces/profile.interface'
-import { AlertService } from '@/services/_alert.service'
 
 const RegisterProfile: React.FC = () => {
     const router = useRouter()
     const imageService = new ImageService()
     const alertService = new AlertService()
     const profileService = new ProfileService()
+    const phoneNumberMask = useMask('phoneNumber')
     const { profile } = useMapState('profile') as IProfileStore
     const [imageModel, setImageModel] = useState<FileList | never[]>([])
 
@@ -51,14 +53,22 @@ const RegisterProfile: React.FC = () => {
         try {
             const { data } = await profileService.getById(profile._id)
 
+            const mobileNumber = phoneNumberMask.getFormatValue(
+                String(data.mobileNumber)
+            )
+
+            const whatsAppNumber = phoneNumberMask.getFormatValue(
+                String(data.whatsAppNumber)
+            )
+
             setValue('name', data.name)
             setValue('role', data.role)
             setValue('email', data.email)
             setValue('surname', data.surname)
             setValue('websiteUrl', data.websiteUrl)
             setValue('linkedinUrl', data.linkedinUrl)
-            setValue('mobileNumber', data.mobileNumber)
-            setValue('whatsAppNumber', data.whatsAppNumber)
+            setValue('mobileNumber', mobileNumber)
+            setValue('whatsAppNumber', whatsAppNumber)
         } catch (error) {
             console.log(error)
         }
@@ -74,8 +84,17 @@ const RegisterProfile: React.FC = () => {
             if (file) profileAvatar = await createImage(file)
 
             const createDTO = { ...model, profileAvatar }
-            createDTO.mobileNumber = Number(createDTO.mobileNumber)
-            createDTO.whatsAppNumber = Number(createDTO.whatsAppNumber)
+
+            const rawMobileNumber = phoneNumberMask.getRawValue(
+                String(createDTO.mobileNumber)
+            )
+
+            const rawWhatsAppNumber = phoneNumberMask.getRawValue(
+                String(createDTO.whatsAppNumber)
+            )
+
+            createDTO.mobileNumber = Number(rawMobileNumber)
+            createDTO.whatsAppNumber = Number(rawWhatsAppNumber)
 
             await updateProfile(createDTO)
             profileActions.setProfile({ ...profile, ...createDTO })
@@ -170,6 +189,7 @@ const RegisterProfile: React.FC = () => {
                         register={register}
                         error={errors.whatsAppNumber}
                         placeholder="(00) 00000-0000"
+                        {...phoneNumberMask.directive}
                     />
 
                     <AppInput
@@ -178,6 +198,7 @@ const RegisterProfile: React.FC = () => {
                         register={register}
                         error={errors.mobileNumber}
                         placeholder="(00) 00000-0000"
+                        {...phoneNumberMask.directive}
                     />
 
                     <AppInput
