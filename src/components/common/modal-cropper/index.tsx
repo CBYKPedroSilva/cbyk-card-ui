@@ -58,14 +58,14 @@ const ModalCropper: React.FC<ModalCropperProps> = props => {
         <AppModal
             width="90vw"
             maxWidth={420}
-            maxHeight="70vh"
             isOpen={isOpen}
+            maxHeight="80vh"
             onClickClose={onClose}
             onBackdropClick={onBackdropClick}
+            footer={<Styles.Button onClick={onCrop}>Finalizar</Styles.Button>}
         >
             <Styles.Container>
                 <div id="image-helper"></div>
-                <Styles.Button onClick={onCrop}>Finalizar</Styles.Button>
             </Styles.Container>
         </AppModal>
     )

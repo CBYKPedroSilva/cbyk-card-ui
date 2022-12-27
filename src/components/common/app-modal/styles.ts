@@ -28,6 +28,14 @@ const ModalHeader = styled.div``
 const ModalBody = styled.div<CommonProps>`
     ${tw`flex-auto overflow-y-auto overflow-x-hidden`}
 
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
     ::-webkit-scrollbar-thumb {
         border: 0px solid #ffffff;
         background-color: ${({ theme, color }) =>
