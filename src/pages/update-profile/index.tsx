@@ -27,10 +27,10 @@ const RegisterProfile: React.FC = () => {
     const phoneNumberMask = useMask('phoneNumber')
     const { profile } = useMapState('profile') as IProfileStore
 
-    const [imageModel, setImageModel] = useState<FileList | never[]>([])
-    const [imageCropper, setImageCropper] = useState<File | null>(null)
     const [imageResult, setImageResult] = useState<File>()
+    const [imageCropper, setImageCropper] = useState<File>()
     const [showModalCropper, setShowModalCropper] = useState(false)
+    const [imageModel, setImageModel] = useState<FileList | never[]>([])
 
     const profileForm = yup.object().shape({
         websiteUrl: yup.string(),
@@ -57,7 +57,7 @@ const RegisterProfile: React.FC = () => {
     useEffect(() => {
         const file = imageModel[0]
 
-        setImageCropper(file ? file : null)
+        if (file) setImageCropper(file)
         setShowModalCropper(!!file)
     }, [imageModel])
 
@@ -237,7 +237,7 @@ const RegisterProfile: React.FC = () => {
             </Styles.Container>
 
             <ModalCropper
-                file={imageModel[0]}
+                file={imageCropper}
                 isOpen={showModalCropper}
                 onSubmit={onSubmitCroppie}
                 onBackdropClick={() => setShowModalCropper(false)}

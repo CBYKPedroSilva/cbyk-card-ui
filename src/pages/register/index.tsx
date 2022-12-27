@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 import Images from '@/assets/images'
 import { setLoading } from '@/hooks'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { useMask } from '@/hooks/mask.hook'
@@ -20,6 +20,7 @@ import { AuthService } from '@/services/auth.service'
 import { decodeJWT } from '@/functions/jwt.function'
 import { authActions } from '@/store/reducers/auth.reducer'
 import { profileActions } from '@/store/reducers/profile.reducer'
+import ModalCropper from '@/components/common/modal-cropper'
 
 const Register: React.FC = () => {
     const router = useRouter()
@@ -29,6 +30,9 @@ const Register: React.FC = () => {
     const profileService = new ProfileService()
     const phoneNumberMask = useMask('phoneNumber')
 
+    const [imageResult, setImageResult] = useState<File>()
+    const [imageCropper, setImageCropper] = useState<File>()
+    const [showModalCropper, setShowModalCropper] = useState(false)
     const [imageModel, setImageModel] = useState<FileList | never[]>([])
 
     const registerForm = yup.object().shape({
@@ -49,13 +53,19 @@ const Register: React.FC = () => {
         formState: { errors }
     } = useForm<IProfileRegister>({ resolver: yupResolver(registerForm) })
 
+    useEffect(() => {
+        const file = imageModel[0]
+
+        if (file) setImageCropper(file)
+        setShowModalCropper(!!file)
+    }, [imageModel])
+
     const handleSubmitForm = async (model: IProfileRegister) => {
         setLoading(true, 'Criando perfil')
 
         try {
             let profileAvatar = ''
-            const file = imageModel[0]
-            if (file) profileAvatar = await createImage(file)
+            if (imageResult) profileAvatar = await createImage(imageResult)
 
             const createDTO = { ...model, profileAvatar }
 
@@ -122,6 +132,11 @@ const Register: React.FC = () => {
         } catch (error) {
             throw new Error('Ocorreu um erro ao realizar login')
         }
+    }
+
+    const onSubmitCroppie = (result: File) => {
+        setImageResult(result)
+        setShowModalCropper(false)
     }
 
     return (
@@ -222,6 +237,13 @@ const Register: React.FC = () => {
                     <Styles.Button type="submit">Criar</Styles.Button>
                 </Styles.Form>
             </Styles.Container>
+
+            <ModalCropper
+                file={imageCropper}
+                isOpen={showModalCropper}
+                onSubmit={onSubmitCroppie}
+                onBackdropClick={() => setShowModalCropper(false)}
+            />
         </>
     )
 }
