@@ -35,12 +35,12 @@ const RegisterProfile: React.FC = () => {
     const profileForm = yup.object().shape({
         websiteUrl: yup.string(),
         linkedinUrl: yup.string(),
+        mobileNumber: yup.string(),
+        whatsAppNumber: yup.string(),
         name: yup.string().required('Insira o seu nome'),
         role: yup.string().required('Insira o seu email'),
         email: yup.string().required('Insira o seu email'),
-        surname: yup.string().required('Insira o seu sobrenome'),
-        mobileNumber: yup.string().required('Insira o seu telefone'),
-        whatsAppNumber: yup.string().required('Insira o seu whatsApp')
+        surname: yup.string().required('Insira o seu sobrenome')
     })
 
     const {
