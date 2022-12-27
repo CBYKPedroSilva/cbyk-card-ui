@@ -19,12 +19,16 @@ const BackButton = styled(AppButton)`
     color: ${props => props.theme.colors.bgPrimary};
 `
 
-const Image = styled.img`
-    ${tw`mb-2`}
+const ImageContainer = styled.figure`
+    ${tw`mb-2 pt-8`}
+
+    > svg {
+        scale: 1.8;
+    }
 `
 
 const Title = styled.h2`
-    ${tw`text-lg mb-14`}
+    ${tw`text-lg text-center mb-14`}
 `
 
 const Form = styled.form`
@@ -36,11 +40,11 @@ const Button = styled(AppButton)`
 `
 
 export default {
+    ImageContainer,
     BackButton,
     Container,
     Header,
     Button,
-    Image,
     Title,
     Form,
     View

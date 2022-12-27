@@ -9,7 +9,7 @@ const Container = styled(AppContainer)`
 `
 
 const Card = styled.article`
-    ${tw`my-8 flex flex-col items-center justify-center rounded-3xl p-8 pt-16 pb-6 relative w-full max-w-[500px]`}
+    ${tw`my-8 flex flex-col items-center justify-center rounded-3xl p-8 pt-16 pb-14 relative w-full max-w-[500px]`}
     background: ${({ theme }) => theme.colors.bgPrimary};
 
     &:after {
@@ -17,6 +17,11 @@ const Card = styled.article`
         border: 12px solid ${({ theme }) => theme.colors.primary};
         border-bottom: none;
         border-left: none;
+    }
+
+    > canvas {
+        width: 100% !important;
+        height: 100% !important;
     }
 `
 

@@ -1,10 +1,10 @@
-import QR from './qr.png'
-import Edit from './edit.png'
-import Mail from './mail.png'
-import Globe from './globe.png'
-import Phone from './phone.png'
-import WhatsApp from './whatsapp.png'
-import Linkedin from './linkedin.png'
+import QR from './qr.svg'
+import Edit from './edit.svg'
+import Mail from './mail.svg'
+import Globe from './globe.svg'
+import Phone from './phone.svg'
+import WhatsApp from './whatsapp.svg'
+import Linkedin from './linkedin.svg'
 
 export default {
     QR,

@@ -1,9 +1,9 @@
 import * as yup from 'yup'
+import Images from '@/assets/images'
 import { setLoading } from '@/hooks'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import Logo from '@/assets/images/logo.png'
 import Styles from '@/styles/pages/register'
 import { RiArrowLeftFill } from 'react-icons/ri'
 import AppHead from '@/components/common/app-head'
@@ -94,7 +94,10 @@ const Register: React.FC = () => {
                     </Styles.BackButton>
 
                     <Styles.View>
-                        <Styles.Image src={Logo} alt="Cartão de visitas" />
+                        <Styles.ImageContainer>
+                            <Images.CBYKLogoWhite />
+                        </Styles.ImageContainer>
+
                         <Styles.Title>Cadastro</Styles.Title>
                     </Styles.View>
                 </Styles.Header>

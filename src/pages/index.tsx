@@ -1,11 +1,10 @@
 import React from 'react'
+import Images from '@/assets/images'
 import { useMapState } from '@/hooks'
 import { useRouter } from 'next/router'
 import Styles from '@/styles/pages/home'
-import QRIcon from '@/assets/images/icons/qr.png'
+import Icons from '@/assets/images/icons'
 import AppHead from '@/components/common/app-head'
-import EditIcon from '@/assets/images/icons/edit.png'
-import LogoCBYKWhite from '@/assets/images/cbyk-logo-white.png'
 import { IProfileStore } from '@/store/@interfaces/profile.interface'
 
 const Home: React.FC = () => {
@@ -13,12 +12,12 @@ const Home: React.FC = () => {
     const { profile } = useMapState('profile') as IProfileStore
     const actions = [
         {
-            icon: QRIcon,
+            icon: <Icons.QR />,
             label: 'Ver QrCode',
             action: () => router.push('/share-profile')
         },
         {
-            icon: EditIcon,
+            icon: <Icons.Edit />,
             label: 'Editar dados',
             action: () => router.push('/update-profile')
         }
@@ -29,7 +28,7 @@ const Home: React.FC = () => {
             <AppHead title="Home" />
 
             <Styles.Container>
-                <Styles.SmallImage src={LogoCBYKWhite} alt="CBYK" />
+                <Images.CBYKLogoWhite />
 
                 <Styles.Figure>
                     <Styles.Image src={profile.profileAvatar} alt="avatar" />
@@ -41,7 +40,7 @@ const Home: React.FC = () => {
                 <Styles.Content>
                     {actions.map((item, index) => (
                         <Styles.Button key={index} onClick={item.action}>
-                            <Styles.Icon src={item.icon} />
+                            <Styles.Icon>{item.icon}</Styles.Icon>
                             {item.label}
                         </Styles.Button>
                     ))}

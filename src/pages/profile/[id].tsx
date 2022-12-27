@@ -4,9 +4,9 @@ import Styles from '@/styles/pages/profile'
 import AppHead from '@/components/common/app-head'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { IProfile } from '@/interfaces/profile.interface'
-import UserHeader, { IUserHeaderData } from '@/components/common/user-header'
 import { ProfileService } from '@/services/profile.service'
 import { WhatsAppService } from '@/services/_whatsapp.service'
+import UserHeader, { IUserHeaderData } from '@/components/common/user-header'
 
 interface IProfileProps {
     headerData: IUserHeaderData
@@ -19,23 +19,23 @@ const Profile: React.FC<IProfileProps> = props => {
 
     const actions = [
         {
-            icon: Icons.WhatsApp,
+            icon: <Icons.WhatsApp />,
             title: 'WhatsApp',
             action: () =>
                 whatsAppService.sendMessage(`55${profile.whatsAppNumber}`, '')
         },
         {
-            icon: Icons.Phone,
+            icon: <Icons.Phone />,
             title: 'Celular',
             action: () => open(`tel:${profile.mobileNumber}`)
         },
         {
-            icon: Icons.Mail,
+            icon: <Icons.Mail />,
             title: 'E-mail',
             action: () => open(`mailto:${profile.email}`)
         },
         {
-            icon: Icons.Linkedin,
+            icon: <Icons.Linkedin />,
             title: 'LinkedIn',
             action: () => open(profile.linkedinUrl)
         }
@@ -48,23 +48,25 @@ const Profile: React.FC<IProfileProps> = props => {
             <AppHead title="Perfil" />
 
             <Styles.Container>
-                <UserHeader data={headerData} />
+                <Styles.Content>
+                    <UserHeader data={headerData} />
 
-                <Styles.Figure>
-                    <Styles.Image src={profile.profileAvatar} />
-                </Styles.Figure>
+                    <Styles.Figure>
+                        <Styles.Image src={profile.profileAvatar} />
+                    </Styles.Figure>
 
-                <Styles.ActionGroup>
-                    {actions.map((item, index) => (
-                        <Styles.Button
-                            key={index}
-                            title={item.title}
-                            onClick={item.action}
-                        >
-                            <Styles.Icon src={item.icon} alt={item.title} />
-                        </Styles.Button>
-                    ))}
-                </Styles.ActionGroup>
+                    <Styles.ActionGroup>
+                        {actions.map((item, index) => (
+                            <Styles.Button
+                                key={index}
+                                title={item.title}
+                                onClick={item.action}
+                            >
+                                {item.icon}
+                            </Styles.Button>
+                        ))}
+                    </Styles.ActionGroup>
+                </Styles.Content>
             </Styles.Container>
         </>
     )
@@ -80,20 +82,24 @@ export const getStaticProps: GetStaticProps = async context => {
     const profileId = context.params?.id
 
     let profile: IProfile = {} as IProfile
-    let headerData: IUserHeaderData = {} as IUserHeaderData
+    let headerData: IUserHeaderData = {
+        role: '',
+        name: '',
+        surname: ''
+    } as IUserHeaderData
 
     let props: IProfileProps = { headerData, profile }
 
     try {
         const profileService = new ProfileService()
         const { data } = await profileService.getById(String(profileId))
-
+        console.log('::::::::: DATA :::::::::', data)
         props = {
             profile: data,
             headerData: {
-                role: data.role,
-                name: data.name,
-                surname: data.surname
+                role: data.role || '',
+                name: data.name || '',
+                surname: data.surname || ''
             }
         }
 

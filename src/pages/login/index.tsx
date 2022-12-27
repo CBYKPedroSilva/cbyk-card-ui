@@ -1,5 +1,6 @@
 import React from 'react'
 import * as yup from 'yup'
+import Images from '@/assets/images'
 import { setLoading } from '@/hooks'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -13,7 +14,6 @@ import { AlertService } from '@/services/_alert.service'
 import AppInput from '@/components/common/form/app-input'
 import { authActions } from '@/store/reducers/auth.reducer'
 import { ProfileService } from '@/services/profile.service'
-import CBYKWhiteLogo from '@/assets/images/cbyk-logo-white.png'
 import { profileActions } from '@/store/reducers/profile.reducer'
 import AppInputPassword from '@/components/common/form/app-input-password'
 
@@ -79,7 +79,10 @@ const Login: React.FC = () => {
 
             <Styles.Container>
                 <Styles.View>
-                    <Styles.Image src={CBYKWhiteLogo} alt="CBYK" />
+                    <Styles.ImageContainer>
+                        <Images.CBYKLogoWhite />
+                    </Styles.ImageContainer>
+
                     <Styles.Title>Cartão de visitas CBYK</Styles.Title>
                 </Styles.View>
 

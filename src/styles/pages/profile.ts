@@ -4,8 +4,12 @@ import styled from 'styled-components'
 import { AppButton, AppContainer } from '../css/ts/components'
 
 const Container = styled(AppContainer)`
-    ${tw`pt-16 min-h-screen`}
+    ${tw`min-h-screen flex justify-center`}
     background: ${({ theme }) => theme.colors.bgLight};
+`
+
+const Content = styled.article`
+    ${tw`py-8 flex flex-col justify-between max-w-[500px]`}
 `
 
 const Figure = styled.figure`
@@ -33,6 +37,7 @@ const Icon = styled.img``
 export default {
     ActionGroup,
     Container,
+    Content,
     Button,
     Figure,
     Image,

@@ -14,6 +14,14 @@ const Image = styled.img`
     ${tw`mb-2 mt-24 w-[74px]`}
 `
 
+const ImageContainer = styled.figure`
+    ${tw`mb-2 mt-24`}
+
+    > svg {
+        scale: 1.8;
+    }
+`
+
 const Title = styled.h2`
     ${tw`text-[12px] mb-14`}
 `
@@ -31,6 +39,7 @@ const Link = styled.a`
 `
 
 export default {
+    ImageContainer,
     Container,
     Button,
     Title,

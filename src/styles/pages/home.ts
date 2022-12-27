@@ -28,16 +28,12 @@ const Subtitle = styled.h4.attrs(fadeIn.up)`
 `
 
 const Figure = styled.figure.attrs(fadeIn.default)`
-    ${tw`rounded-2xl p-3 flex items-center justify-center`}
+    ${tw`mt-2 rounded-2xl p-3 flex items-center justify-center`}
     border: 3px solid ${({ theme }) => theme.colors.primary};
 `
 
 const Image = styled.img.attrs(fadeIn.default)`
     ${tw`w-48 h-48 rounded-2xl object-cover`}
-`
-
-const SmallImage = styled.img.attrs(fadeIn.down)`
-    ${tw`w-12 mb-3`}
 `
 
 const Content = styled.article`
@@ -51,12 +47,11 @@ const Button = styled(AppButton).attrs(fadeIn.up)`
     box-shadow: 4.57803px 4.57803px 17.1676px rgba(0, 0, 0, 0.1);
 `
 
-const Icon = styled.img`
+const Icon = styled.i`
     ${tw`mr-4 w-8 h-8`}
 `
 
 export default {
-    SmallImage,
     Container,
     Subtitle,
     Content,

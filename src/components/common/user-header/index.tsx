@@ -1,6 +1,6 @@
 import React from 'react'
 import Styles from './styles'
-import LogoCBYK from '@/assets/images/cbyk-logo.png'
+import Images from '@/assets/images'
 
 export interface IUserHeaderData {
     role: string
@@ -14,10 +14,10 @@ interface UserHeaderProps {
 const UserHeader: React.FC<UserHeaderProps> = ({ data }) => {
     return (
         <Styles.Container>
-            <Styles.Image src={LogoCBYK} alt="CBYK" />
+            <Images.CBYKLogo />
             <Styles.Text>{data.name}</Styles.Text>
             <Styles.Text>
-                {data.surname}
+                {data.surname} &nbsp;
                 <Styles.Badge>{data.role}</Styles.Badge>
             </Styles.Text>
         </Styles.Container>
