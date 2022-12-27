@@ -15,9 +15,15 @@ import AppInput from '@/components/common/form/app-input'
 import { ProfileService } from '@/services/profile.service'
 import { IProfileRegister } from '@/interfaces/profile.interface'
 import AppInputFile from '@/components/common/form/app-input-file'
+import { IAuth } from '@/interfaces/auth.interface'
+import { AuthService } from '@/services/auth.service'
+import { decodeJWT } from '@/functions/jwt.function'
+import { authActions } from '@/store/reducers/auth.reducer'
+import { profileActions } from '@/store/reducers/profile.reducer'
 
 const Register: React.FC = () => {
     const router = useRouter()
+    const authService = new AuthService()
     const imageService = new ImageService()
     const alertService = new AlertService()
     const profileService = new ProfileService()
@@ -65,9 +71,14 @@ const Register: React.FC = () => {
             createDTO.whatsAppNumber = Number(rawWhatsAppNumber)
 
             await createProfile(createDTO)
+            await handleLogin({
+                email: createDTO.email,
+                password: createDTO.password
+            })
+
             alertService.success('Perfil cadastrado com sucesso')
 
-            router.push('/login')
+            router.push('/')
         } catch (error) {
             alertService.error('Ocorreu um erro ao cadastrar perfil')
         } finally {
@@ -88,9 +99,28 @@ const Register: React.FC = () => {
 
     const createProfile = async (model: IProfileRegister) => {
         try {
-            await profileService.create(model)
+            const { data } = await profileService.create(model)
+            profileActions.setProfile(data)
         } catch (error) {
             throw new Error('Erro ao criar perfil')
+        }
+    }
+
+    const handleLogin = async (model: IAuth) => {
+        setLoading(true, 'Realizando login...')
+
+        try {
+            const { data } = await authService.login(model)
+            const user = await decodeJWT(data.access_token)
+            authActions.setToken(data.access_token)
+
+            authActions.setUser({
+                id: user.id,
+                code: user.code,
+                email: user.email
+            })
+        } catch (error) {
+            throw new Error('Ocorreu um erro ao realizar login')
         }
     }
 

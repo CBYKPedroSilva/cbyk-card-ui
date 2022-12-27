@@ -66,7 +66,6 @@ const Login: React.FC = () => {
     const setProfile = async (email: string) => {
         try {
             const { data } = await profileService.getByEmail(email)
-            console.log('profile ::::::::', data)
             profileActions.setProfile(data)
         } catch (error) {
             throw error
