@@ -2,6 +2,7 @@ import tw from 'twin.macro'
 import { fadeIn } from '../animation'
 import styled from 'styled-components'
 import { AppButton, AppContainer } from '../css/ts/components'
+import BgBlackGlass from '../../assets/images/background/bg-black-glass.png'
 
 const Container = styled(AppContainer)`
     ${tw`pt-16 min-h-screen flex flex-col items-center`}
@@ -9,7 +10,8 @@ const Container = styled(AppContainer)`
 
     &:before {
         ${tw`content-[''] absolute top-0 w-full h-60 shadow-lg`}
-        background: linear-gradient(155deg,#323232 46%,#191919 80%);
+        /* background: linear-gradient(155deg,#323232 46%,#191919 80%); */
+        background-image: url(${BgBlackGlass});
     }
 
     * {
