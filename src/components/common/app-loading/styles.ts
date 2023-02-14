@@ -8,7 +8,7 @@ const Backdrop = styled.section`
 
 const Label = styled.label`
     ${tw`font-bold mt-4`}
-    color: ${({ theme }) => theme.colors.bgPrimary};
+    color: ${({ theme }) => theme.colors.white};
 `
 
 const Image = styled.img`

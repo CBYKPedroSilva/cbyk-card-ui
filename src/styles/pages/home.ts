@@ -10,7 +10,6 @@ const Container = styled(AppContainer)`
 
     &:before {
         ${tw`content-[''] absolute top-0 w-full h-60 shadow-lg`}
-        /* background: linear-gradient(155deg,#323232 46%,#191919 80%); */
         background-image: url(${BgBlackGlass});
     }
 
