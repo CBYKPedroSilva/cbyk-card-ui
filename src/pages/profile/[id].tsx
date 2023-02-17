@@ -63,7 +63,6 @@ const Profile: React.FC<IProfileProps> = ({ profileId }) => {
     ]
 
     useEffect(() => {
-        console.log('i fire once')
         getProfile()
     }, [])
 
