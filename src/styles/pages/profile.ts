@@ -44,8 +44,22 @@ const Button = styled(AppButton).attrs(fadeIn.up)`
 
 const Icon = styled.img``
 
+const ErrorContainer = styled(AppContainer)`
+    ${tw`flex items-center justify-center`}
+`
+
+const ErrorImage = styled.img``
+
+const ErrorText = styled.p`
+    ${tw`text-center font-bold`}
+    color: ${({ theme }) => theme.colors.primary};
+`
+
 export default {
+    ErrorContainer,
     ActionGroup,
+    ErrorImage,
+    ErrorText,
     Container,
     Content,
     Button,
