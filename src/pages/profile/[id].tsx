@@ -115,7 +115,7 @@ export const getStaticProps: GetStaticProps = async context => {
             }
         }
 
-        return { props }
+        return { props, revalidate: 2 }
     } catch (error) {
         return { props }
     }
