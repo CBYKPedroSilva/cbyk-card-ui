@@ -87,7 +87,7 @@ const Profile: React.FC<IProfileProps> = props => {
 export default Profile
 
 export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
-    return { paths: [], fallback: 'blocking' }
+    return { paths: [], fallback: true }
 }
 
 export const getStaticProps: GetStaticProps = async context => {
@@ -115,7 +115,7 @@ export const getStaticProps: GetStaticProps = async context => {
             }
         }
 
-        return { props, revalidate: 2 }
+        return { props, revalidate: 1 }
     } catch (error) {
         return { props }
     }
